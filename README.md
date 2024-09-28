@@ -11,6 +11,13 @@ This project is a tip calculator application built using Vue 2, designed for con
 - Responsive design with a single-column view on mobile.
 - Custom sliders for setting tip percentage and number of people.
 
+## Structure
+- Vite + vue2
+- Service Layer
+- Vue Router
+- Components
+- 
+
 
 ## API Reference
 
