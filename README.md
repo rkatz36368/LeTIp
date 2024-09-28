@@ -16,7 +16,7 @@ This project is a tip calculator application built using Vue 2, designed for con
 - Service Layer
 - Vue Router
 - Components
-- 
+
 
 
 ## API Reference
