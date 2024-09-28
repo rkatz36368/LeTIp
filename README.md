@@ -16,7 +16,7 @@ This project is a tip calculator application built using Vue 2, designed for con
 
 #### Get Conversion from EUR or USD to BRL
 
-```http
+```
   GET /latest?amount=${amount}&from=${fromCurrency}&to=${toCurrency}
 ```
 
@@ -63,14 +63,13 @@ To build the project for production
 
 ## Demo
 
-Insert gif or link to demo
-
-
-
+You can see the project here: https://letip.surge.sh/
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](/screenshots/leTip_Fullscreen.png)
+![App Screenshot](/screenshots/letTipCell1.png)
+![App Screenshot](/screenshots/letTipCell2.png)
 
 
 ## License
