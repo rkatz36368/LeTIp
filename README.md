@@ -73,6 +73,9 @@ You can see the project here: https://letip.surge.sh/
 ![App Screenshot](/screenshots/letTipCell1.png)
 ![App Screenshot](/screenshots/letTipCell2.png)
 
+## Board Usado no Projeto
+
+https://trello.com/invite/b/66ef164ad7696b3ef177b326/ATTI0f2fbed3e19db3f08c6c63686c1e29ce7A8AA9CA/assesment
 
 ## License
 
