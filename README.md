@@ -68,6 +68,8 @@ You can see the project here: https://letip.surge.sh/
 ## Screenshots
 
 ![App Screenshot](/screenshots/leTip_Fullscreen.png)
+
+## Screenshots Mobile
 ![App Screenshot](/screenshots/letTipCell1.png)
 ![App Screenshot](/screenshots/letTipCell2.png)
 
