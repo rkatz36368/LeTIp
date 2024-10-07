@@ -5,17 +5,20 @@
             <span v-if="prependIcon" class="input-field__prepend-icon">{{ prependIcon }}</span>
             <input
               class="input-field__input"
-              :type="type"
               :value="value"
-              @input="$emit('input', $event.target.value)"
+              type="number"
               :placeholder="placeholder"
               @keypress="onKeypress"
-            />
+              @input="onInputChange"
+              />
+              <!-- @input="$emit('input', $event.target.value)" -->
         </div>
     </div>
   </template>
   
   <script>
+  import { debounce } from 'lodash';
+
   export default {
     name: "InputField",
     props: {
@@ -27,10 +30,6 @@
         type: [String, Number, null],
         default: null
       },
-      type: {
-        type: String,
-        default: 'text'
-      },
       placeholder: {
         type: String,
         default: ''
@@ -40,12 +39,43 @@
         default: null
       }
     },
-    methods: {
-      onKeypress (event) {
-        if (!('1234567890.'.includes(event.key))) {
-          event.preventDefault()
-        } 
+    data(){
+      return {
+        debouncedInput: null,
       }
+    },
+    methods: {
+      emitInputValue(value) {
+      this.$emit('input', value);
+      },
+      onKeypress (event) {
+        const key = event.key;
+        const value = event.target.value;
+        const isControlKey = key === 'Backspace' || key === 'Delete' || key === 'ArrowLeft' || key === 'ArrowRight';
+        if (!('1234567890.'.includes(key))) {
+          event.preventDefault()
+          return
+        } 
+        if (key === '.' && value.includes('.')) {
+          event.preventDefault()
+          return
+        }
+        const parts = value.split('.')
+        if (parts.length === 2 && parts[1].length >= 2 && !isControlKey) {
+          event.preventDefault();
+          return;
+        }
+      },
+      onInputChange(event) {
+        this.debouncedInput(event.target.value);
+      },
+    },
+    created() {
+    this.debouncedInput = debounce(this.emitInputValue, 300);
+    },
+    beforeDestroy() {
+      // Cancel any pending debounced calls to prevent memory leaks
+      this.debouncedInput.cancel();
     }
   };
   </script>

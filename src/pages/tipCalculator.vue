@@ -4,7 +4,7 @@
     <div class="app__calculator">
       <div class="app__calculator-column app__calculator-column--left" id="left-column" v-if="!isMobile || showingLeftColumn">
         <switch-button v-model="ifDolar"></switch-button>
-        <inputField label="Valor:" type="number" placeholder="73.23" :prependIcon="currencySymbol" v-model="billAmount"></inputField>
+        <inputField label="Valor:" placeholder="73.23" :prependIcon="currencySymbol" v-model="billAmount"></inputField>
         <commonSlider label="Gorjeta" :min="10" :max="20" appendText="%" v-model="tipPercentage"></commonSlider>
         <commonSlider label="Pessoas" :min="2" :max="16" v-model="numPeople"></commonSlider>
       </div>
@@ -13,7 +13,7 @@
           <valueDisplay title="Gorjeta" :value="tipAmount" :prefix="currencySymbol"></valueDisplay>
           <valueDisplay title="Total" :value="displayTotal" :prefix="currencySymbol"></valueDisplay>
           <valueDisplay title="por Pessoa" :value="individualValue" :prefix="currencySymbol"></valueDisplay>
-          <valueDisplay :dummy="convertedComputedValue" title="em R$" :value="convertedValue" :loadingValue="loadingConverter" prefix="R$"></valueDisplay>
+          <valueDisplay :dummy="convertedWatchedValue" title="em R$" :value="convertedValue" :loadingValue="loadingConverter" prefix="R$"></valueDisplay>
       </div>
       <button v-if="isMobile" class="app__toggle-button" @click="toggleColumn">
       {{ showingLeftColumn ? '>' : '<' }}
@@ -28,7 +28,6 @@ import inputField from '../components/inputs/inputField.vue'
 import commonSlider from '../components/inputs/commonSlider.vue'
 import valueDisplay from '../components/tipCalculator/valueDisplay.vue';
 import  {getConvertCurrency}  from '../services/converterService';
-import { EventBus } from '../eventbus.js';
 
 export default {
   components: {
@@ -49,6 +48,7 @@ export default {
       loadingConverter: false,
       isMobile: false,
       showingLeftColumn: true,
+      convertedWatchedValue: 0,
     };
   },
   mounted() {
@@ -91,11 +91,13 @@ export default {
     individualValue: function () {
       return (Number(this.displayTotal)/this.numPeople)
     },
-    convertedComputedValue:  function  () {
+  },
+  watch: {
+    individualValue(){
       let currency = this.ifDolar ? 'USD' : 'EUR'
       let serversConvertedValue = this.getConvertedValue(Number(this.individualValue), currency)
-      return (Number(serversConvertedValue))
-    },
+      convertedWatchedValue = (Number(serversConvertedValue))
+    }
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.checkIfMobile);
