@@ -11,7 +11,6 @@
               @keypress="onKeypress"
               @input="onInputChange"
               />
-              <!-- @input="$emit('input', $event.target.value)" -->
         </div>
     </div>
   </template>
@@ -74,7 +73,6 @@
     this.debouncedInput = debounce(this.emitInputValue, 300);
     },
     beforeDestroy() {
-      // Cancel any pending debounced calls to prevent memory leaks
       this.debouncedInput.cancel();
     }
   };
